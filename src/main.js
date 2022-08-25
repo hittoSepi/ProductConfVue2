@@ -1,9 +1,18 @@
 import Vue from 'vue'
+import Vuex from 'vuex'
 import App from './App.vue'
 
-Vue.config.productionTip = false
+Vue.use(Vuex);
 
+const store = new Vuex.Store({
+  state: {
+    scene: null
+  },
+});
 
-new Vue({
-  render: h => h(App),
-}).$mount('#app')
+// mount app
+const app = new Vue({
+  el: '#app',
+  store,
+  render: h => h(App)
+});

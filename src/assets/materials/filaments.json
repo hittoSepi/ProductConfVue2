@@ -1,0 +1,200 @@
+{
+  
+    "PLA": {
+        "name": "PLA",
+        "type": "filament",
+        "density": 1.24,
+        "diameter": 1.75,
+        "temperature": 200,
+        "bed_temperature": 60,
+        "shader": {
+            
+            "color": [0.8, 0.8, 0.8],
+            "roughness": 0.2,
+            "metallic": 0.0,
+            "normal": "CorrigatedPlastic_N.jpg"
+        }
+    },
+    "ABS": {
+        "name": "ABS",
+        "type": "filament",
+        "density": 1.04,
+        "diameter": 1.75,
+        "temperature": 230,
+        "bed_temperature": 100,
+        "shader": {
+            "color": [0.8, 0.8, 0.8],
+            "roughness": 0.2,
+            "metallic": 0.0
+        }
+    },
+    "PETG": {
+        "name": "PETG",
+        "type": "filament",
+        "density": 1.27,
+        "diameter": 1.75,
+        "temperature": 230,
+        "bed_temperature": 70,
+        "shader": {
+            "color": [0.8, 0.8, 0.8],
+            "roughness": 0.2,
+            "metallic": 0.0
+        }
+    },
+    "HIPS": {
+        "name": "HIPS",
+        "type": "filament",
+        "density": 1.04,
+        "diameter": 1.75,
+        "temperature": 230,
+        "bed_temperature": 100,
+        "shader": {
+            "color": [0.8, 0.8, 0.8],
+            "roughness": 0.2,
+            "metallic": 0.0
+        }
+    },
+    "PVA": {
+        "name": "PVA",
+        "type": "filament",
+        "density": 1.04,
+        "diameter": 1.75,
+        "temperature": 230,
+        "bed_temperature": 100,
+        "shader": {
+            "color": [0.8, 0.8, 0.8],
+            "roughness": 0.2,
+            "metallic": 0.0
+        }
+    },
+    "TPU": {
+        "name": "TPU",
+        "type": "filament",
+        "density": 1.04,
+        "diameter": 1.75,
+        "temperature": 230,
+        "bed_temperature": 100,
+        "shader": {
+            "color": [0.8, 0.8, 0.8],
+            "roughness": 0.2,
+            "metallic": 0.0
+        }
+    },
+    "Nylon": {
+        "name": "Nylon",
+        "type": "filament",
+        "density": 1.04,
+        "diameter": 1.75,
+        "temperature": 230,
+        "bed_temperature": 100,
+        "shader": {
+            "color": [0.8, 0.8, 0.8],
+            "roughness": 0.2,
+            "metallic": 0.0
+        }
+    },
+    "PC": {
+        "name": "PC",
+        "type": "filament",
+        "density": 1.04,
+        "diameter": 1.75,
+        "temperature": 230,
+        "bed_temperature": 100,
+        "shader": {
+            "color": [0.8, 0.8, 0.8],
+            "roughness": 0.2,
+            "metallic": 0.0
+        }
+    },
+    "PP": {
+        "name": "PP",
+        "type": "filament",
+        "density": 1.04,
+        "diameter": 1.75,
+        "temperature": 230,
+        "bed_temperature": 100,
+        "shader": {
+            "color": [0.8, 0.8, 0.8],
+            "roughness": 0.2,
+            "metallic": 0.0
+        }
+    },
+    "POM": {
+        "name": "POM",
+        "type": "filament",
+        "density": 1.04,
+        "diameter": 1.75,
+        "temperature": 230,
+        "bed_temperature": 100,
+        "shader": {
+            "color": [0.8, 0.8, 0.8],
+            "roughness": 0.2,
+            "metallic": 0.0
+        }
+    },
+    "ASA": {
+        "name": "ASA",
+        "type": "filament",
+        "density": 1.04,
+        "diameter": 1.75,
+        "temperature": 230,
+        "bed_temperature": 100,
+        "shader": {
+            "color": [0.8, 0.8, 0.8],
+            "roughness": 0.2,
+            "metallic": 0.0
+        }
+    },
+    "Carbon Fiber": {
+        "name": "Carbon Fiber",
+        "type": "filament",
+        "density": 1.04,
+        "diameter": 1.75,
+        "temperature": 230,
+        "bed_temperature": 100,
+        "shader": {
+            "color": [0.8, 0.8, 0.8],
+            "roughness": 0.2,
+            "metallic": 0.0
+        }
+    },
+    "Wood": {
+        "name": "Wood",
+        "type": "filament",
+        "density": 1.04,
+        "diameter": 1.75,
+        "temperature": 230,
+        "bed_temperature": 100,
+        "shader": {
+            "color": [0.8, 0.8, 0.8],
+            "roughness": 0.2,
+            "metallic": 0.0
+        }
+    },
+    "Metal": {
+        "name": "Metal",
+        "type": "filament",
+        "density": 1.04,
+        "diameter": 1.75,
+        "temperature": 230,
+        "bed_temperature": 100,
+        "shader": {
+            "color": [0.8, 0.8, 0.8],
+            "roughness": 0.2,
+            "metallic": 0.0
+        }
+    },
+    "Stone": {
+        "name": "Stone",
+        "type": "filament",
+        "density": 1.04,
+        "diameter": 1.75,
+        "temperature": 230,
+        "bed_temperature": 100,
+        "shader": {
+            "color": [0.8, 0.8, 0.8],
+            "roughness": 0.2,
+            "metallic": 0.0
+        }
+    }
+}

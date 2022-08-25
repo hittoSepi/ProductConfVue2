@@ -4,7 +4,9 @@
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 				<div class="container-fluid">
 					<a class="navbar-brand" href="#">Product Configurator</a>
-					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+						data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+						aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
 					<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -16,13 +18,13 @@
 			</nav>
 		</header>
 
-		<main>	
+		<main>
 			<div class="container-fluid">
 
 				<div class="row">
 
 					<div class="col-md-2">
-						<ModelList :models="models"/>
+						<ModelList :models="models" />
 					</div>
 
 					<div class="col-md-8">
@@ -36,73 +38,87 @@
 							<!-- inline input group for position -->
 							<div class="row my-2">
 								<label>Position</label>
-								
+
 								<div class="col">
 									<label for="positionX">X</label>
-									<input type="number" class="form-control" id="positionX" v-model="selectedModel.position.x" />
+									<input type="number" class="form-control" id="positionX"
+										v-model="selectedModel.position.x" />
 								</div>
 
 								<div class="col">
 									<label for="positionY">Y</label>
-									<input type="number" class="form-control" id="positionY" v-model="selectedModel.position.y" />
+									<input type="number" class="form-control" id="positionY"
+										v-model="selectedModel.position.y" />
 								</div>
 
 								<div class="col">
 									<label for="positionZ">Z</label>
-									<input type="number" class="form-control" id="positionZ" v-model="selectedModel.position.z" />
+									<input type="number" class="form-control" id="positionZ"
+										v-model="selectedModel.position.z" />
 								</div>
 							</div>
 
 							<!-- input group for rotation -->
 							<div class="row my-2">
 								<label>Rotation</label>
-								
+
 								<div class="col">
 									<label for="rotationX">X</label>
-									<input type="number" class="form-control" id="rotationX" v-model="selectedModel.rotationQuaternion.x" />
+									<input type="number" class="form-control" id="rotationX"
+										v-model="selectedModel.rotationQuaternion.x" />
 								</div>
 
 								<div class="col">
 									<label for="rotationY">Y</label>
-									<input type="number" class="form-control" id="rotationY" v-model="selectedModel.rotationQuaternion.y" />
+									<input type="number" class="form-control" id="rotationY"
+										v-model="selectedModel.rotationQuaternion.y" />
 								</div>
 
 								<div class="col">
 									<label for="rotationZ">Z</label>
-									<input type="number" class="form-control" id="rotationZ" v-model="selectedModel.rotationQuaternion.z" />
+									<input type="number" class="form-control" id="rotationZ"
+										v-model="selectedModel.rotationQuaternion.z" />
 								</div>
 							</div>
-							
+
 							<!-- input group for scale -->
 							<div class="row my-2">
 								<label>Scale</label>
-								
+
 								<div class="col">
 									<label for="scaleX">X</label>
-									<input type="number" class="form-control" id="scaleX" v-model="selectedModel.scaling.x" />
+									<input type="number" class="form-control" id="scaleX"
+										v-model="selectedModel.scaling.x" />
 								</div>
 
 								<div class="col">
 									<label for="scaleY">Y</label>
-									<input type="number" class="form-control" id="scaleY" v-model="selectedModel.scaling.y" />
+									<input type="number" class="form-control" id="scaleY"
+										v-model="selectedModel.scaling.y" />
 								</div>
 
 								<div class="col">
 									<label for="scaleZ">Z</label>
-									<input type="number" class="form-control" id="scaleZ" v-model="selectedModel.scaling.z" />
+									<input type="number" class="form-control" id="scaleZ"
+										v-model="selectedModel.scaling.z" />
 								</div>
 							</div>
 
 						</div>
 
 						<div v-else>
-							<p>No model selected</p>	
+							<p>No model selected</p>
 						</div>
 
 					</div> <!-- /#selected-object-details  -->
 
 				</div>
 			</div>
+
+			<div class="col-2">
+				<MaterialList @material-clicked="materialChange" :materials="filaments"></MaterialList>
+			</div>
+
 		</main> <!-- /main -->
 	</div>
 
@@ -110,16 +126,26 @@
 
 <script>
 
+
+// load filaments.json from assets
+import fils from './assets/materials/filaments.json'
+
 export default {
 	name: 'App',
 	components: {
-		ModelList: () => import('./components/ModelList.vue'),
+		ModelList: () => import("./components/ModelList.vue"),
+		MaterialList: () => import("./components/MaterialList.vue"),
+
 	},
 	data() {
 		return {
 			selectedModel: {},
 			modelSelected: false,
 			models: [],
+			materials: [],
+			shaders: {},
+			// import filaments.json from assets
+			filaments: undefined,
 			canvas: undefined,
 			engine: undefined,
 			scene: undefined,
@@ -189,7 +215,7 @@ export default {
 
 					_self.modelSelected = true;
 					_self.selectedModel = model;
-				
+
 				}, undefined, undefined, ".stl");
 			})
 
@@ -205,6 +231,7 @@ export default {
 
 
 		loadAssets() {
+			this.parseMaterials();
 			this.createCamera();
 			this.createLight();
 			this.createGround();
@@ -247,11 +274,44 @@ export default {
 
 		},
 
+		parseMaterials() {
+			var _self = this;
+			// iterate through all filaments and create materials
+			for (var name in _self.filaments) {
+				var material = _self.filaments[name];
+				const pbr = new BABYLON.PBRMaterial(material.name, _self.scene);
+				pbr.albedoColor = new BABYLON.Color3(material.shader.color[0], material.shader.color[1], material.shader.color[2]);
+			
+				pbr.metallic = material.shader.metallic;
+				pbr.roughness = material.shader.roughness;
+
+				// set normal map
+				if (material.shader.normal) {
+					pbr.forceIrradianceInFragment = true;
+					pbr.bumpTexture = new BABYLON.Texture("textures/" + material.shader.normal, _self.scene);
+
+				}
+
+				// add shader to store
+				_self.shaders[name] = { name, material:pbr };
+			}
+			console.log(_self.shaders);
+		},
+
+		materialChange(material_name) {
+			if (this.modelSelected === true) {
+				console.log("materialChange", material_name)
+				console.log(this.shaders[material_name])
+				this.selectedModel.material = this.shaders[material_name].material;
+			}
+			//this.selectedMaterial = this.shaders[material_name].material;
+		},
 
 	},
 	mounted() {
 
 		var _self = this;
+		this.filaments = fils;
 
 		// initialize babylon engine
 		this.canvas = document.getElementById('renderCanvas');
@@ -265,7 +325,7 @@ export default {
 
 		this.gizmoManager.onAttachedToMeshObservable.add((gizmo) => {
 			if (gizmo) {
-				
+
 				_self.selectedModel = gizmo
 				_self.modelSelected = true;
 
@@ -278,7 +338,7 @@ export default {
 
 		this.loadAssets();
 
-		
+
 
 		this.engine.runRenderLoop(() => {
 			this.scene.render();
