@@ -239,9 +239,11 @@ export default {
 
 
 		createLight() {
-			this.light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 1, 0), this.scene);
-			this.light.intensity = 0.7;
-			this.light.castShadows = true;
+			// create directional sunlight
+			this.light = new BABYLON.DirectionalLight("light1", new BABYLON.Vector3(0, -1, 0), this.scene);
+			this.light.position = new BABYLON.Vector3(0, 100, 0);
+			this.light.intensity = 0.5;
+
 		},
 
 
@@ -279,16 +281,27 @@ export default {
 			// iterate through all filaments and create materials
 			for (var name in _self.filaments) {
 				var material = _self.filaments[name];
-				const pbr = new BABYLON.PBRMaterial(material.name, _self.scene);
+				let pbr = new BABYLON.PBRMaterial(material.name, _self.scene);
+				
 				pbr.albedoColor = new BABYLON.Color3(material.shader.color[0], material.shader.color[1], material.shader.color[2]);
-			
 				pbr.metallic = material.shader.metallic;
 				pbr.roughness = material.shader.roughness;
 
+	
+				pbr.reflectionTexture = BABYLON.CubeTexture.CreateFromPrefilteredData("/textures/environment.dds", _self.scene);
+				pbr.metallicTexture = new BABYLON.Texture("/textures/reflection.jpg", _self.scene);
+
+				pbr.useRoughnessFromMetallicTextureAlpha = false;
+				pbr.useRoughnessFromMetallicTextureGreen = true;
+				pbr.useMetallnessFromMetallicTextureBlue = true;
+
+				pbr.forceIrradianceInFragment = true;
+
 				// set normal map
-				if (material.shader.normal) {
-					pbr.forceIrradianceInFragment = true;
-					pbr.bumpTexture = new BABYLON.Texture("textures/" + material.shader.normal, _self.scene);
+				if (material.shader.bump) {
+				
+					console.log("textures/" + material.shader.bump)
+					pbr.bumpTexture = new BABYLON.Texture("textures/" + material.shader.bump, _self.scene);
 
 				}
 
@@ -302,6 +315,7 @@ export default {
 			if (this.modelSelected === true) {
 				console.log("materialChange", material_name)
 				console.log(this.shaders[material_name])
+				this.scene.debugLayer.select( this.shaders[material_name].material, "DEBUG");
 				this.selectedModel.material = this.shaders[material_name].material;
 			}
 			//this.selectedMaterial = this.shaders[material_name].material;
@@ -338,7 +352,8 @@ export default {
 
 		this.loadAssets();
 
-
+ 		//this.scene.debugLayer.show({ showExplorer: true });
+    	
 
 		this.engine.runRenderLoop(() => {
 			this.scene.render();
